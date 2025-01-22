@@ -494,7 +494,7 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
       
       위의 txt 파일 도출을 사용해서 filebeat에서 감지한 데이터의 변형이 반영되는지를 확인하기 (동적 감지 확인을 위해 filter 부분 제외)
       
-      ```json
+       ```markdown
       input {
         elasticsearch {
           hosts => ["http://localhost:9200"]
@@ -509,7 +509,7 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
           codec => line { format => "%{type}, %{value}" }  # 각 필드를 원하는 형식으로 저장
         }
       }
-      ```
+       ```
       
       ![image 2](https://github.com/user-attachments/assets/037d02b2-bbf2-4933-9776-077bc449a472)
 
