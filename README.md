@@ -1,135 +1,37 @@
-# People_In_Eight
-
+# ElasticSearch, Logstash, mySQL 활용 실습
 <aside>
 
-1. DB - 이관 저장 / ES - main
+## 프로젝트 개요
+현대 금융시장은 복잡성과 변동성이 점점 증가하고 있으며, 개인 투자자들은 이를 기반으로 한 의사결정에서 어려움을 겪고 있습니다. 이 프로젝트는 실시간으로 경제 뉴스를 분석하여 핵심 키워드를 추출하고, 이를 바탕으로 주식, 채권, 금, 원자재 등 다양한 ETF(상장지수펀드)의 동향을 파악하여 사용자에게 맞춤형 투자 인사이트를 제공하는 것을 목표로 합니다.
 
-![image](https://github.com/user-attachments/assets/ce52e6cd-fac1-4fa5-bf8c-e0cf57366731)
+## 프로젝트 목표
 
+   1. 뉴스 정보 기반 데이터로 사용자에게 맞춤형 ETF 추천
+       -
+   2. 경제 동향 파악을 위한 시각화 자료 제공
+       -
+   3. 맞춤형 투자 정보 제공
+       -
 
+## 💡 기술적 목표 
+**1. ElasticSearch에 csv데이터를 업로드**
+ 
+     
+**2. ElasticSearch에 업로드 된 데이터를 mySQL로 이관**
 
+## ⚙ 핵심 기능
 
-- 트러블 슈팅
-    - 인덱스 이름 : 대문자 불가 오류 발생
-    - 트래킹 컬럼  이슈 : es에 계속 무한으로 저장됨 .
-    - Logstash JDK 인식 문제
-        - 
-    - ES와 DB연결 문제
-        - JDBC Driver
-            - 설치 문제
-                - **오류 내용: `logstash-output-jdbc` 플러그인 관련 오류**
-                    - **실제 오류 코드**:
-                        
-                        ```
-                        plaintext
-                        복사편집
-                        [2025-01-21T18:16:15,891][ERROR][logstash.plugins.registry] Tried to load a plugin's code, but failed. {:exception=>#<LoadError: no such file to load -- logstash/outputs/jdbc>, :path=>"logstash/outputs/jdbc", :type=>"output", :name=>"jdbc"}
-                        [2025-01-21T18:16:15,903][FATAL][logstash.runner] The given configuration is invalid. Reason: Unable to configure plugins: (PluginLoadingError) Couldn't find any output plugin named 'jdbc'.
-                        
-                        ```
-                        
-                        - **해결 방법**:
-                            - `logstash-output-jdbc` 플러그인 재설치 명령 실행:
-                                
-                                ```bash
-                                bash
-                                복사편집
-                                logstash-plugin install logstash-output-jdbc
-                                
-                                ```
-                                
-                - **오류 내용: JDK 인식 실패 문제**
-                    
-                    강제적으로 한번 더 인식 시켜주기
-                    
-                    ```sql
-                    set JAVA_HOME=C:\02.devEnv\ELK\logstash2-7.11.1\jdk
-                    set PATH=%JAVA_HOME%\bin;%PATH%
-                    logstash-plugin install logstash-output-jdbc
-                    ```
-                    
-        - 연결 문제 확인
-            - Logstash[output용]의 Es 데이터 수신 확인을 위한 txt 파일 도출
-                
-                [메모장에 넣기 ](https://www.notion.so/4f590a11c2d744a4aebe4ef422b3e202?pvs=21)
-                
-                ![image 1](https://github.com/user-attachments/assets/60cdb3c5-ec38-4a3d-9d51-783315ce6eaa)
+1. **경제 뉴스 데이터 크롤링 및 키워드 분석**:
+    - 주요 경제 관련 키워드(예: 정치, 전쟁, 금리, 인플레이션 등)를 자동으로 식별.
+    - 뉴스 카테고리(정치, 경제, 산업 등)와 관련 ETF의 연관성 매핑.
+2. **ETF 동향 분석**:
+    - 주식, 채권(장기/단기), 금, 원자재 ETF의 실시간 변동 및 수급 분석.
+    - 특정 뉴스 키워드가 ETF 동향에 미치는 영향을 가시화.
+3. **맞춤형 투자 추천**:
+    - 사용자 관심사(예: 특정 자산군, 리스크 성향 등)에 따라 ETF 추천.
+    - 경제 동향을 쉽게 이해할 수 있는 인터랙티브 대시보드 제공.       
+            
 
-                
-            - Logstash[output용]의 Es 동적 움직임 감지 테스트
-                
-                위의 txt 파일 도출을 사용해서 filebeat에서 감지한 데이터의 변형이 반영되는지를 확인하기 (동적 감지 확인을 위해 filter 부분 제외)
-                
-                ```json
-                input {
-                  elasticsearch {
-                    hosts => ["http://localhost:9200"]
-                    index => "news"
-                    query => '{ "query": { "match_all": {} } }'
-                    docinfo => true
-                  }
-                }
-                output {
-                  file {
-                    path => "C:/02.devEnv/ELK/logstash_output.txt"  # 저장할 파일 경로
-                    codec => line { format => "%{type}, %{value}" }  # 각 필드를 원하는 형식으로 저장
-                  }
-                }
-                ```
-                
-                ![image 2](https://github.com/user-attachments/assets/037d02b2-bbf2-4933-9776-077bc449a472)
-
-                
-            - Logstash[output용]과 Mysql의 연결 부분 문제 테스트
-                
-                Window에 Mysql 설치하여 window → Linux → mysql 이 아니라 window OS의 동일 선상에서 사용할 수 있도록 테스트
-                
-            - Logstash[output용]의 conf 파일의 설정 문제 테스트
-                
-                JDBC Driver Encoding 방식의 충돌 : UTF-8
-                
-                파일의 enconding 방식을 강제적으로 파일에 명시하였지만, 실패
-                
-                JDBC Driver에서의 [statement] 변경, 실패
-                
-                conf 파일의 filter 부분 삭제, 연결 성공
-                
-                → 중복을 삭제하기 위해서 filter 구성 다시하기
-                
-- 도메인(뉴스 기반으로 투자 추천)
-    
-    뉴스 → 키워드 → 주식
-    
-    - 뉴스 경제 관련 키워드 별 크롤링 ex)정치,전쟁
-    - ETF 동향 파악
-        1. 주식 ETF
-        2. 채권-(장기/단기)  ETF
-        3. 금 ETF
-        4. 원자재 ETF
-        
-        ![image 3](https://github.com/user-attachments/assets/f524f570-4282-4301-8de7-c48061e3f980)
-
-        
-        → 시간이 남는다면, 크롤링을 도입 ⇒ 도입완 (단, 데이터의 균형을 위해 생성형 AI를 통한 검색으로 실제 있는 과거의 뉴스 기사들을 찾아서 따로 넣어줌)
-        
-        과거의 데이터를 통해서 주가에 대한 경향 분석
-        
-- 핵심 기능
-    1. **경제 뉴스 데이터 크롤링 및 키워드 분석**:
-        - 주요 경제 관련 키워드(예: 정치, 전쟁, 금리, 인플레이션 등)를 자동으로 식별.
-        - 뉴스 카테고리(정치, 경제, 산업 등)와 관련 ETF의 연관성 매핑.
-    2. **ETF 동향 분석**:
-        - 주식, 채권(장기/단기), 금, 원자재 ETF의 실시간 변동 및 수급 분석.
-        - 특정 뉴스 키워드가 ETF 동향에 미치는 영향을 가시화.
-    3. **맞춤형 투자 추천**:
-        - 사용자 관심사(예: 특정 자산군, 리스크 성향 등)에 따라 ETF 추천.
-        - 경제 동향을 쉽게 이해할 수 있는 인터랙티브 대시보드 제공.
-- 프로젝트 개요
-    - 현대 금융시장은 복잡성과 변동성이 점점 증가하고 있으며, 개인 투자자들은 이를 기반으로 한 의사결정에서 어려움을 겪고 있습니다. 이 프로젝트는 실시간으로 경제 뉴스를 분석하여 핵심 키워드를 추출하고, 이를 바탕으로 주식, 채권, 금, 원자재 등 다양한 ETF(상장지수펀드)의 동향을 파악하여 사용자에게 맞춤형 투자 인사이트를 제공하는 것을 목표로 합니다.
-- 프로젝트 목적
-    1. 뉴스 정보 기반 데이터로 사용자에게 맞춤형 ETF 추천
-    2. 경제 동향 파악을 위한 시각화 자료 제공
-    3. 
     
     경제 뉴스 분석:
     
@@ -546,6 +448,138 @@
 
 [mysql 서버 구축 윈도우 ](https://www.notion.so/mysql-2fc7f99791d242b6ba951e0ab8c4bba2?pvs=21)
 
+# 🚀 트러블 슈팅
+  <details>
+  <summary> 인덱스 이름 : 대문자 불가 오류 발생 </summary>
+  
+  </details>
+  
+  <details>
+  <summary> 트래킹 컬럼  이슈 : es에 계속 무한으로 저장됨 </summary>
+  
+  </details>
+
+  <details>
+  <summary> Logstash JDK 인식 문제 </summary>
+  
+  </details>
+
+  <details>
+  <summary> ES와 DB연결 문제 </summary>
+  
+  </details>
+  
+  <details>
+    <summary> JDBC Driver </summary>
+      
+  - 설치 문제
+
+     - **오류 내용: `logstash-output-jdbc` 플러그인 관련 오류**
+      
+     - **실제 오류 코드**:
+                    
+                    
+                    복사편집
+                    [2025-01-21T18:16:15,891][ERROR][logstash.plugins.registry] Tried to load a plugin's code, but failed. {:exception=>#<LoadError: no such file to load -- logstash/outputs/jdbc>, :path=>"logstash/outputs/jdbc", :type=>"output", :name=>"jdbc"}
+                    [2025-01-21T18:16:15,903][FATAL][logstash.runner] The given configuration is invalid. Reason: Unable to configure plugins: (PluginLoadingError) Couldn't find any output plugin named 'jdbc'.
+                    
+  
+
+
+
+   **해결 방법**:
+  - `logstash-output-jdbc` 플러그인 재설치 명령 실행:
+                                
+                            
+    
+         복사편집
+        logstash-plugin install logstash-output-jdbc
+                                
+                        
+     </details>        
+         
+    <details>
+        <summary>  
+                오류 내용: JDK 인식 실패 문제
+        </summary>
+                    
+     강제적으로 한번 더 인식 시켜주기
+                    
+                
+                    set JAVA_HOME=C:\02.devEnv\ELK\logstash2-7.11.1\jdk
+                    set PATH=%JAVA_HOME%\bin;%PATH%
+                    logstash-plugin install logstash-output-jdbc
+
+    - 연결 문제 확인
+        - Logstash[output용]의 Es 데이터 수신 확인을 위한 txt 파일 도출
+            
+            [메모장에 넣기 ](https://www.notion.so/4f590a11c2d744a4aebe4ef422b3e202?pvs=21)
+            
+            ![image 1](https://github.com/user-attachments/assets/60cdb3c5-ec38-4a3d-9d51-783315ce6eaa)
+
+            
+        - Logstash[output용]의 Es 동적 움직임 감지 테스트
+            
+            위의 txt 파일 도출을 사용해서 filebeat에서 감지한 데이터의 변형이 반영되는지를 확인하기 (동적 감지 확인을 위해 filter 부분 제외)
+            
+            ```json
+            input {
+              elasticsearch {
+                hosts => ["http://localhost:9200"]
+                index => "news"
+                query => '{ "query": { "match_all": {} } }'
+                docinfo => true
+              }
+            }
+            output {
+              file {
+                path => "C:/02.devEnv/ELK/logstash_output.txt"  # 저장할 파일 경로
+                codec => line { format => "%{type}, %{value}" }  # 각 필드를 원하는 형식으로 저장
+              }
+            }
+            ```
+            
+            ![image 2](https://github.com/user-attachments/assets/037d02b2-bbf2-4933-9776-077bc449a472)
+
+            
+        - Logstash[output용]과 Mysql의 연결 부분 문제 테스트
+            
+            Window에 Mysql 설치하여 window → Linux → mysql 이 아니라 window OS의 동일 선상에서 사용할 수 있도록 테스트
+            
+        - Logstash[output용]의 conf 파일의 설정 문제 테스트
+            
+            JDBC Driver Encoding 방식의 충돌 : UTF-8
+            
+            파일의 enconding 방식을 강제적으로 파일에 명시하였지만, 실패
+            
+            JDBC Driver에서의 [statement] 변경, 실패
+            
+            conf 파일의 filter 부분 삭제, 연결 성공
+            
+            → 중복을 삭제하기 위해서 filter 구성 다시하기
+
+</details>
+                
+
 같은 path 참조 오류
 
 ![image 5](https://github.com/user-attachments/assets/a6083e0b-0855-4ce1-a4d4-d8d735275c1e)
+
+1. DB - 이관 저장 / ES - main
+
+![image](https://github.com/user-attachments/assets/ce52e6cd-fac1-4fa5-bf8c-e0cf57366731)
+
+
+- 도메인(뉴스 기반으로 투자 추천)
+    
+    뉴스 → 키워드 → 주식
+    
+    - 뉴스 경제 관련 키워드 별 크롤링 ex)정치,전쟁
+    - ETF 동향 파악
+        1. 주식 ETF
+        2. 채권-(장기/단기)  ETF
+        3. 금 ETF
+        4. 원자재 ETF
+        
+        ![image 3](https://github.com/user-attachments/assets/f524f570-4282-4301-8de7-c48061e3f980)
+
