@@ -467,7 +467,7 @@ input {
   <details>
   <summary> Logstash JDK 인식 문제 </summary>
 
-   JDK를 자체적으로 보유하고 있음에도 불구하고 인식하지 못하는 현상 발생
+   JDK를 자체적으로 보유하고 있음에도 불구하고 인식하지 못하는 현상 발생.
 
 ```markdown
 set JAVA_HOME="C:\02.devEnv\ELK\logstash-7.11.1\jdk"
