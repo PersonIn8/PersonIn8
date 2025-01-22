@@ -1,10 +1,10 @@
 # ElasticSearch, Logstash, mySQL 활용 실습
 <aside>
 
-## 프로젝트 개요
+## 👨🏻‍💻 프로젝트 개요
 현대 금융시장은 복잡성과 변동성이 점점 증가하고 있으며, 개인 투자자들은 이를 기반으로 한 의사결정에서 어려움을 겪고 있습니다. 이 프로젝트는 실시간으로 경제 뉴스를 분석하여 핵심 키워드를 추출하고, 이를 바탕으로 주식, 채권, 금, 원자재 등 다양한 ETF(상장지수펀드)의 동향을 파악하여 사용자에게 맞춤형 투자 인사이트를 제공하는 것을 목표로 합니다.
 
-## 팀원 소개
+## 👨‍👨‍👦‍👦 팀원 소개
 | <img src="https://github.com/wns5120.png" width="200px"> | <img src="https://github.com/JaeHee-devSpace.png" width="200px"> | <img src="https://github.com/andytjdqls.png" width="200px"> | <img src="https://github.com/wild-turkey.png" width="200px"> |
 | :---: | :---: | :---: | :---: |
 | [유호준](https://github.com/wns5120) | [박재희](https://github.com/JaeHee-devSpace) | [이성빈](https://github.com/andytjdqls) | [김지훈](https://github.com/wild-turkey) |
@@ -125,7 +125,7 @@
 ## 📊 데이터
 ---------------------------------------------------------------
 <details>
-   <summary> 크롤링 과정</summary>
+   <summary> 🗂️크롤링 과정🗂️ </summary>
 
    1. 네이버 뉴스의 한 기사만 크롤링 해보기
             
@@ -351,7 +351,7 @@
      
      ---
         
-- # **키포인트 요약**
+- # 📝 **키포인트 요약**
      
      1. **뉴스 데이터의 주요 사용 목적**:
          - **실시간 검색과 분석**이 중요하다면 **ElasticSearch를 메인 저장소**로.
@@ -556,5 +556,10 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
 </details>
                 
 
+----
+
+# 🤔 회고
 
 
+
+Special Thanks to 김우현
