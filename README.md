@@ -34,10 +34,9 @@
 
 
 ## 🎯 프로젝트 목표
-
-   - 뉴스 정보 기반 데이터로 사용자에게 맞춤형 ETF 추천
+**1. 뉴스 정보 기반 데이터로 사용자에게 맞춤형 ETF 추천**
        
-   - 경제 동향 파악을 위한 시각화 자료 제공
+**2. 경제 동향 파악을 위한 시각화 자료 제공**
 
        
 
@@ -72,7 +71,6 @@
     ### mermaid code
 
     
-    ```sql
     flowchart
         
         subgraph Linux["Linux"]
@@ -108,7 +106,6 @@
         style E fill:#FFD6E8,stroke:#D72638,stroke-width:2px,shape:stadium  %% Elasticsearch
         style F fill:#D2EFFF,stroke:#0077B6,stroke-width:2px,shape:rect  %% LogStash 2
     
-    ```
 
 
 ## 📊 데이터
@@ -338,7 +335,7 @@
      - 실시간 대시보드에서 특정 ETF 카테고리 관련 기사를 빠르게 필터링.
      - 과거 데이터를 RDBMS에서 보관하며 월별/분기별 통계 보고서 생성.
      
-     ---
+     
         
 - # 📝 **키포인트 요약**
      
@@ -351,15 +348,34 @@
          - **대용량 데이터 처리 및 고속 검색** → ElasticSearch.
          - **소규모 데이터 정리 및 관리** → RDBMS.
      
-     ---
+     
         
   
 
 # 🚀 트러블 슈팅
   <details>
   <summary> 인덱스 이름 : 대문자 불가 오류 발생 </summary>
-  
+  ## 문제정의
+
+```sql
+Successfully started Logstash API endpoint {:port=>9600}
+C:/02.devenv/ELK/logstash-7.11.1/vendor/bundle/jruby/2.5.0/gems/rufus-scheduler-3.0.9/lib/rufus/scheduler/cronline.rb:77: warning: constant ::Fixnum is deprecated
+[2025-01-21T14:42:01,985][INFO ][logstash.inputs.jdbc     ][main][6d4aeb4cd79e7f4c0f50afe35f6d7ad8a963fbf373d6c987fb9b705bc46d85ca] (0.040607s) SELECT * FROM users
+[2025-01-21T14:42:02,454][ERROR][logstash.outputs.elasticsearch][main][6582090182203f038cf99cd5d36f9dd357e61d1c1f01d3e4debb937dd404b023] Could not index event to Elasticsearch. {:status=>400, :action=>["index", {:_id=>nil, :_index=>"ETFnews", :routing=>nil, :_type=>"_doc"}, #LogStash::Event:0x6147c224], :response=>{"index"=>{"_index"=>"ETFnews", "_type"=>"_doc", "_id"=>nil, "status"=>400, "error"=>{"type"=>"invalid_index_name_exception", "reason"=>"Invalid index name [ETFnews], must be lowercase", "index_uuid"=>"na", "index"=>"ETFnews"}}}}
+[2025-01-21T14:42:02,461][ERROR][logstash.outputs.elasticsearch][main][6582090182203f038cf99cd5d36f9dd357e61d1c1f01d3e4debb937dd404b023] Could not index event to Elasticsearch. {:status=>400, :action=>["index", {:_id=>nil, :_index=>"ETFnews", :routing=>nil, :_type=>"_doc"}, #LogStash::Event:0x7c4775fd], :response=>{"index"=>{"_index"=>"ETFnews", "_type"=>"_doc", "_id"=>nil, "status"=>400, "error"=>{"type"=>"invalid_index_name_exception", "reason"=>"Invalid index name [ETFnews], must be lowercase", "index_uuid"=>"na", "index"=>"ETFnews"}}}}
+[2025-01-21T14:42:02,461][ERROR][logstash.outputs.elasticsearch][main][6582090182203f038cf99cd5d36f9dd357e61d1c1f01d3e4debb937dd404b023] Could not index event to Elasticsearch. {:status=>400, :action=>["index", {:_id=>nil, :_index=>"ETFnews", :routing=>nil, :_type=>"_doc"}, #LogStash::Event:0x3757b92], :response=>{"index"=>{"_index"=>"ETFnews", "_type"=>"_doc", "_id"=>nil, "status"=>400, "error"=>{"type"=>"invalid_index_name_exception", "reason"=>"Invalid index name [ETFnews], must be lowercase", "index_uuid"=>"na", "index"=>"ETFnews"}}}}
+[2025-01-21T14:43:00,095][INFO ][logstash.inputs.jdbc     ][main][6d4aeb4cd79e7f4c0f50afe35f6d7ad8a963fbf373d6c987fb9b705bc46d85ca] (0.002554s) SELECT * FROM users
+[2025-01-21T14:43:00,224][ERROR][logstash.outputs.elasticsearch][main][6582090182203f038cf99cd5d36f9dd357e61d1c1f01d3e4debb937dd404b023] Could not index event to Elasticsearch. {:status=>400, :action=>["index", {:_id=>nil, :_index=>"ETFnews", :routing=>nil, :_type=>"_doc"}, #LogStash::Event:0x4ea59bdb], :response=>{"index"=>{"_index"=>"ETFnews", "_type"=>"_doc", "_id"=>nil, "status"=>400, "error"=>{"type"=>"invalid_index_name_exception", "reason"=>"Invalid index name [ETFnews], must be lowercase", "index_uuid"=>"na", "index"=>"ETFnews"}}}}
+```
+
+Logstash 실행 시 인덱스 찾을 수 없는 오류 발생 
+
+"Invalid index name [ETFnews], must be lowercase”
+
+인덱스 이름이 대문자여서 명명규칙 위반
   </details>
+  
+---
 
    <details>
   <summary> 스케쥴링 </summary>
@@ -385,11 +401,8 @@
 
   </details>
   
-  <details>
-  <summary> 트래킹 컬럼  이슈 : es에 계속 무한으로 저장됨 </summary>
+  ---
   
-  </details>
-
    <details>
   <summary> DB 저장에서의 중복 저장 문제 </summary>
 
@@ -433,6 +446,8 @@ input {
 }
 ```
   </details>
+  
+---
 
   <details>
   <summary> Logstash JDK 인식 문제 </summary>
@@ -447,6 +462,8 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
 강제적으로 인식시켜주기 후, 실행 성공
   
   </details>
+  
+---
 
   <details>
   <summary> ES와 DB연결 문제 </summary>
@@ -499,6 +516,8 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
       → 중복을 삭제하기 위해서 filter 구성 다시하기
   </details>
   
+  ------------
+  
   <details>
     <summary> JDBC Driver </summary>
       
@@ -527,7 +546,9 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
                                 
                         
      </details>        
-         
+     
+     ---
+    
     <details>
         <summary>  
                 오류 내용: JDK 인식 실패 문제
