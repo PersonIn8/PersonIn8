@@ -43,8 +43,9 @@
 ## 💡 기술적 목표 
 **1. ElasticSearch에 csv데이터를 업로드**
  
+**2. 2개의 Logstash를 활용한 pipeline 구축**
      
-**2. ElasticSearch에 업로드 된 데이터를 mySQL로 이관**
+**3. ElasticSearch에 업로드 된 데이터를 mySQL로 이관**
 
 ## ⚙ 핵심 기능
 
@@ -104,7 +105,27 @@
         style D fill:#D2EFFF,stroke:#0077B6,stroke-width:2px,shape:rect  %% LogStash 1
         style E fill:#FFD6E8,stroke:#D72638,stroke-width:2px,shape:stadium  %% Elasticsearch
         style F fill:#D2EFFF,stroke:#0077B6,stroke-width:2px,shape:rect  %% LogStash 2
-    
+
+## 🛢 데이터베이스
+
+- 스키마
+  
+```sql
+-- 1. 테이블 생성 (이미 존재하면 삭제 후 새로 생성)
+DROP TABLE IF EXISTS data_status;
+
+CREATE TABLE data_status (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- 고유 ID (자동 증가)
+    category VARCHAR(255) NOT NULL,    -- 종류 (예: 원자재, 금)
+    status VARCHAR(255) NOT NULL,      -- 값 (예: 상승, 하락)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 데이터 삽입 시간
+);
+
+-- 2. 결과 확인 (선택적: 남아 있는 데이터 확인)
+SELECT * FROM data_status;
+```
+- 테이블 구조
+![image](https://github.com/user-attachments/assets/9b3d766b-81e0-46dd-a598-3bcd4a31d53e)
 
 
 ## 📊 데이터
@@ -248,51 +269,29 @@
             크롤링 사이트 : https://news.naver.com/
 </aside>
 
-   
+## 📈 Kibana 시각화
 
-- ## 📝 **키포인트 요약**
+- 종목별상승하락비율
+![image](https://github.com/user-attachments/assets/e5819b23-24a8-470b-8a31-1f48d1038d82)
+
+- 분야별 ETF 영향
+![image](https://github.com/user-attachments/assets/41d6376c-4db3-44f7-970a-12cc08b49c47)
+
+
+ ## 📝 **키포인트 요약**
      
-     1. **뉴스 데이터의 주요 사용 목적**:
-         - **실시간 검색과 분석**이 중요하다면 **ElasticSearch를 메인 저장소**로.
-     2. **데이터 구조**:
-         - 비정형 데이터(기사 본문 중심) → ElasticSearch.
-         - 정형 데이터(관계형 모델로 관리 가능한 데이터) → RDBMS.
-     3. **데이터 크기**:
-         - **대용량 데이터 처리 및 고속 검색** → ElasticSearch.
-         - **소규모 데이터 정리 및 관리** → RDBMS.
+1. **뉴스 데이터의 주요 사용 목적**:
+  - **실시간 검색과 분석**이 중요하다면 **ElasticSearch를 메인 저장소**로.
+2. **데이터 구조**:
+  - 비정형 데이터(기사 본문 중심) → ElasticSearch.
+  - 정형 데이터(관계형 모델로 관리 가능한 데이터) → RDBMS.
+3. **데이터 크기**:
+  - **대용량 데이터 처리 및 고속 검색** → ElasticSearch.
+  - **소규모 데이터 정리 및 관리** → RDBMS.
 
 
     
 ## Key Points
-
-- ### 📌 Logstash 2개
-     
-     **장점**
-     
-     1. **워크로드 분리**:
-         - 하나의 Logstash는 데이터 수집과 전처리에 집중하고, 다른 Logstash는 Elasticsearch에서 데이터를 읽어 집계 및 후처리에 집중합니다.
-         - 이러한 분리는 병렬 처리를 가능하게 하며 데이터 처리 속도를 높입니다.
-     2. **유연성 강화**:
-         - 각각의 Logstash가 독립된 파이프라인으로 작동하여 특정 요구사항에 맞는 데이터 처리가 가능합니다.
-         - 예를 들어, Logstash 1은 실시간 데이터 전처리에 초점을 맞추고, Logstash 2는 Elasticsearch의 집계 데이터를 MySQL로 전송하는 데 초점을 맞출 수 있습니다.
-     3. **안정성 향상**:
-         - 하나의 Logstash에서 장애가 발생해도 다른 Logstash는 독립적으로 동작하여 전체 시스템 가용성을 유지합니다.
-         - 특정 Logstash가 과부하를 받지 않도록 역할을 분리하여 시스템 안정성을 높입니다.
-     4. **확장성**:
-         - 데이터 처리량이 증가할 경우, 추가 Logstash를 도입해 특정 작업(예: 데이터 필터링, 추가 저장소와의 통합)을 쉽게 분리할 수 있습니다.
-     
-     
-     **단점**
-     
-     1. **관리 복잡성 증가**:
-         - Logstash 2개를 운영하면 설정 및 유지보수가 더 복잡해집니다. 각 Logstash의 파이프라인 및 동작을 세밀히 관리해야 합니다.
-     2. **리소스 소모 증가**:
-         - Logstash는 상대적으로 높은 CPU 및 메모리 사용량을 가지므로, 인스턴스를 2개로 늘릴 경우 서버 리소스 부담이 증가할 수 있습니다.
-     3. **동기화 문제**:
-         - 두 Logstash가 동일한 Elasticsearch와 상호작용할 경우 데이터 충돌 또는 동기화 문제를 방지하기 위해 추가적인 조정이 필요할 수 있습니다.
-
-
---------------------------------------------------------------------------------------------------
 
 - ### 📌 ElasticSearch 메인, RDBMS 이관
         
@@ -337,6 +336,37 @@
      - 과거 데이터를 RDBMS에서 보관하며 월별/분기별 통계 보고서 생성.
 
        
+
+- ### 📌 Logstash 2개
+     
+     **장점**
+     
+     1. **워크로드 분리**:
+         - 하나의 Logstash는 데이터 수집과 전처리에 집중하고, 다른 Logstash는 Elasticsearch에서 데이터를 읽어 집계 및 후처리에 집중합니다.
+         - 이러한 분리는 병렬 처리를 가능하게 하며 데이터 처리 속도를 높입니다.
+     2. **유연성 강화**:
+         - 각각의 Logstash가 독립된 파이프라인으로 작동하여 특정 요구사항에 맞는 데이터 처리가 가능합니다.
+         - 예를 들어, Logstash 1은 실시간 데이터 전처리에 초점을 맞추고, Logstash 2는 Elasticsearch의 집계 데이터를 MySQL로 전송하는 데 초점을 맞출 수 있습니다.
+     3. **안정성 향상**:
+         - 하나의 Logstash에서 장애가 발생해도 다른 Logstash는 독립적으로 동작하여 전체 시스템 가용성을 유지합니다.
+         - 특정 Logstash가 과부하를 받지 않도록 역할을 분리하여 시스템 안정성을 높입니다.
+     4. **확장성**:
+         - 데이터 처리량이 증가할 경우, 추가 Logstash를 도입해 특정 작업(예: 데이터 필터링, 추가 저장소와의 통합)을 쉽게 분리할 수 있습니다.
+     
+     
+     **단점**
+     
+     1. **관리 복잡성 증가**:
+         - Logstash 2개를 운영하면 설정 및 유지보수가 더 복잡해집니다. 각 Logstash의 파이프라인 및 동작을 세밀히 관리해야 합니다.
+     2. **리소스 소모 증가**:
+         - Logstash는 상대적으로 높은 CPU 및 메모리 사용량을 가지므로, 인스턴스를 2개로 늘릴 경우 서버 리소스 부담이 증가할 수 있습니다.
+     3. **동기화 문제**:
+         - 두 Logstash가 동일한 Elasticsearch와 상호작용할 경우 데이터 충돌 또는 동기화 문제를 방지하기 위해 추가적인 조정이 필요할 수 있습니다.
+
+
+--------------------------------------------------------------------------------------------------
+
+
 
 # 🚀 트러블 슈팅
   <details>
