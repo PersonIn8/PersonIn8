@@ -9,7 +9,7 @@
 | :---: | :---: | :---: | :---: |
 | [유호준](https://github.com/wns5120) | [박재희](https://github.com/JaeHee-devSpace) | [이성빈](https://github.com/andytjdqls) | [김지훈](https://github.com/wild-turkey) |
 
-## 기술 스택
+## 📚 기술 스택
 
 ### 1. **프로그래밍 언어 및 데이터 처리**
 - ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
