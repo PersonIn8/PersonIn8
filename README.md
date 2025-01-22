@@ -461,7 +461,53 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
 
   <details>
   <summary> ES와 DB연결 문제 </summary>
-  
+     - 연결 문제 확인
+     - Logstash[output용]의 Es 데이터 수신 확인을 위한 txt 파일 도출
+      
+   [메모장에 넣기 ](https://www.notion.so/4f590a11c2d744a4aebe4ef422b3e202?pvs=21)
+      
+   ![image 1](https://github.com/user-attachments/assets/60cdb3c5-ec38-4a3d-9d51-783315ce6eaa)
+
+      
+  - Logstash[output용]의 Es 동적 움직임 감지 테스트
+      
+      위의 txt 파일 도출을 사용해서 filebeat에서 감지한 데이터의 변형이 반영되는지를 확인하기 (동적 감지 확인을 위해 filter 부분 제외)
+      
+      ```json
+      input {
+        elasticsearch {
+          hosts => ["http://localhost:9200"]
+          index => "news"
+          query => '{ "query": { "match_all": {} } }'
+          docinfo => true
+        }
+      }
+      output {
+        file {
+          path => "C:/02.devEnv/ELK/logstash_output.txt"  # 저장할 파일 경로
+          codec => line { format => "%{type}, %{value}" }  # 각 필드를 원하는 형식으로 저장
+        }
+      }
+      ```
+      
+      ![image 2](https://github.com/user-attachments/assets/037d02b2-bbf2-4933-9776-077bc449a472)
+
+      
+  - Logstash[output용]과 Mysql의 연결 부분 문제 테스트
+      
+      Window에 Mysql 설치하여 window → Linux → mysql 이 아니라 window OS의 동일 선상에서 사용할 수 있도록 테스트
+      
+  - Logstash[output용]의 conf 파일의 설정 문제 테스트
+      
+      JDBC Driver Encoding 방식의 충돌 : UTF-8
+      
+      파일의 enconding 방식을 강제적으로 파일에 명시하였지만, 실패
+      
+      JDBC Driver에서의 [statement] 변경, 실패
+      
+      conf 파일의 filter 부분 삭제, 연결 성공
+      
+      → 중복을 삭제하기 위해서 filter 구성 다시하기
   </details>
   
   <details>
@@ -505,53 +551,6 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
                     set PATH=%JAVA_HOME%\bin;%PATH%
                     logstash-plugin install logstash-output-jdbc
 
-    - 연결 문제 확인
-        - Logstash[output용]의 Es 데이터 수신 확인을 위한 txt 파일 도출
-            
-            [메모장에 넣기 ](https://www.notion.so/4f590a11c2d744a4aebe4ef422b3e202?pvs=21)
-            
-            ![image 1](https://github.com/user-attachments/assets/60cdb3c5-ec38-4a3d-9d51-783315ce6eaa)
-
-            
-        - Logstash[output용]의 Es 동적 움직임 감지 테스트
-            
-            위의 txt 파일 도출을 사용해서 filebeat에서 감지한 데이터의 변형이 반영되는지를 확인하기 (동적 감지 확인을 위해 filter 부분 제외)
-            
-            ```json
-            input {
-              elasticsearch {
-                hosts => ["http://localhost:9200"]
-                index => "news"
-                query => '{ "query": { "match_all": {} } }'
-                docinfo => true
-              }
-            }
-            output {
-              file {
-                path => "C:/02.devEnv/ELK/logstash_output.txt"  # 저장할 파일 경로
-                codec => line { format => "%{type}, %{value}" }  # 각 필드를 원하는 형식으로 저장
-              }
-            }
-            ```
-            
-            ![image 2](https://github.com/user-attachments/assets/037d02b2-bbf2-4933-9776-077bc449a472)
-
-            
-        - Logstash[output용]과 Mysql의 연결 부분 문제 테스트
-            
-            Window에 Mysql 설치하여 window → Linux → mysql 이 아니라 window OS의 동일 선상에서 사용할 수 있도록 테스트
-            
-        - Logstash[output용]의 conf 파일의 설정 문제 테스트
-            
-            JDBC Driver Encoding 방식의 충돌 : UTF-8
-            
-            파일의 enconding 방식을 강제적으로 파일에 명시하였지만, 실패
-            
-            JDBC Driver에서의 [statement] 변경, 실패
-            
-            conf 파일의 filter 부분 삭제, 연결 성공
-            
-            → 중복을 삭제하기 위해서 filter 구성 다시하기
 
 </details>
                 
@@ -560,6 +559,8 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
 
 # 🤔 회고
 
-
+- 데이터를 관리하는 여러 스택간의 유기적인 활용을 실습해 볼 수 있어서 좋았습니다.
+- 그림으로만 보던 파이프라인을 구축하는 경험을 하게 되어 이해하는데 큰 도움이 되었습니다.
+- 짧은 프로젝트 기간으로 인해서 처음에 계획했었던 실시간 크롤링 기능과, 구체적인 시각화 기능을 구현하지 못해 아쉽습니다.
 
 Special Thanks to 김우현
