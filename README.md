@@ -10,27 +10,7 @@
 | [유호준](https://github.com/wns5120) | [박재희](https://github.com/JaeHee-devSpace) | [이성빈](https://github.com/andytjdqls) | [김지훈](https://github.com/wild-turkey) |
 
 ## 📚 기술 스택
-
-### 1. **프로그래밍 언어 및 데이터 처리**
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black) ![Requests](https://img.shields.io/badge/Requests-00599C?style=flat&logo=python&logoColor=white)
-
-### 2. **통합 개발 환경 (IDE)**
-![Visual Studio Code](https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white) ![Google Colab](https://img.shields.io/badge/Google%20Colab-F9AB00?style=flat&logo=googlecolab&logoColor=black)
-
-### 3. **ELK 스택 및 데이터 파이프라인**
-![FileBeat](https://img.shields.io/badge/FileBeat-0077C8?style=flat&logo=elastic&logoColor=white) ![Logstash](https://img.shields.io/badge/Logstash-005571?style=flat&logo=elastic&logoColor=white) ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elastic&logoColor=white) ![Kibana](https://img.shields.io/badge/Kibana-005571?style=flat&logo=elastic&logoColor=white)
-
-### 4. **가상화 및 OS 관리**
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black) ![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white) ![MobaXterm](https://img.shields.io/badge/MobaXterm-008FBA?style=flat&logoColor=white)
-
-### 5. **데이터베이스 및 쿼리 도구**
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) ![DBeaver](https://img.shields.io/badge/DBeaver-1C2834?style=flat&logoColor=white)
-
-### 6. **구조도 작성 도구**
-![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white) ![Mermaid](https://img.shields.io/badge/Mermaid-4995DA?style=flat&logo=mermaid&logoColor=white)
-
-### 7. **데이터 활용 도구**
-![ChatGPT](https://img.shields.io/badge/ChatGPT-412991?style=flat&logo=openai&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black) ![Requests](https://img.shields.io/badge/Requests-00599C?style=flat&logo=python&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white) ![Google Colab](https://img.shields.io/badge/Google%20Colab-F9AB00?style=flat&logo=googlecolab&logoColor=black) ![FileBeat](https://img.shields.io/badge/FileBeat-0077C8?style=flat&logo=elastic&logoColor=white) ![Logstash](https://img.shields.io/badge/Logstash-005571?style=flat&logo=elastic&logoColor=white) ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elastic&logoColor=white) ![Kibana](https://img.shields.io/badge/Kibana-005571?style=flat&logo=elastic&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black) ![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white) ![MobaXterm](https://img.shields.io/badge/MobaXterm-008FBA?style=flat&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) ![DBeaver](https://img.shields.io/badge/DBeaver-1C2834?style=flat&logoColor=white) ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white) ![Mermaid](https://img.shields.io/badge/Mermaid-4995DA?style=flat&logo=mermaid&logoColor=white) ![ChatGPT](https://img.shields.io/badge/ChatGPT-412991?style=flat&logo=openai&logoColor=white)
 
 
 ## 🎯 프로젝트 목표
@@ -269,14 +249,6 @@ SELECT * FROM data_status;
             크롤링 사이트 : https://news.naver.com/
 </aside>
 
-## 📈 Kibana 시각화
-
-- 종목별상승하락비율
-![image](https://github.com/user-attachments/assets/e5819b23-24a8-470b-8a31-1f48d1038d82)
-
-- 분야별 ETF 영향
-![image](https://github.com/user-attachments/assets/41d6376c-4db3-44f7-970a-12cc08b49c47)
-
 
  ## 📝 **키포인트 요약**
      
@@ -363,6 +335,14 @@ SELECT * FROM data_status;
      3. **동기화 문제**:
          - 두 Logstash가 동일한 Elasticsearch와 상호작용할 경우 데이터 충돌 또는 동기화 문제를 방지하기 위해 추가적인 조정이 필요할 수 있습니다.
 
+
+## 📈 Kibana 시각화
+
+- 종목별상승하락비율
+![image](https://github.com/user-attachments/assets/e5819b23-24a8-470b-8a31-1f48d1038d82)
+
+- 분야별 ETF 영향
+![image](https://github.com/user-attachments/assets/41d6376c-4db3-44f7-970a-12cc08b49c47)
 
 --------------------------------------------------------------------------------------------------
 
