@@ -12,36 +12,25 @@
 ## 📚 기술 스택
 
 ### 1. **프로그래밍 언어 및 데이터 처리**
-- ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-- ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-- ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black)
-- ![Requests](https://img.shields.io/badge/Requests-00599C?style=flat&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black) ![Requests](https://img.shields.io/badge/Requests-00599C?style=flat&logo=python&logoColor=white)
 
 ### 2. **통합 개발 환경 (IDE)**
-- ![Visual Studio Code](https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white)
-- ![Google Colab](https://img.shields.io/badge/Google%20Colab-F9AB00?style=flat&logo=googlecolab&logoColor=black)
+![Visual Studio Code](https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white) ![Google Colab](https://img.shields.io/badge/Google%20Colab-F9AB00?style=flat&logo=googlecolab&logoColor=black)
 
 ### 3. **ELK 스택 및 데이터 파이프라인**
-- ![FileBeat](https://img.shields.io/badge/FileBeat-0077C8?style=flat&logo=elastic&logoColor=white)
-- ![Logstash](https://img.shields.io/badge/Logstash-005571?style=flat&logo=elastic&logoColor=white)
-- ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elastic&logoColor=white)
-- ![Kibana](https://img.shields.io/badge/Kibana-005571?style=flat&logo=elastic&logoColor=white)
+![FileBeat](https://img.shields.io/badge/FileBeat-0077C8?style=flat&logo=elastic&logoColor=white) ![Logstash](https://img.shields.io/badge/Logstash-005571?style=flat&logo=elastic&logoColor=white) ![Elasticsearch](https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elastic&logoColor=white) ![Kibana](https://img.shields.io/badge/Kibana-005571?style=flat&logo=elastic&logoColor=white)
 
 ### 4. **가상화 및 OS 관리**
-- ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)
-- ![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white)
-- ![MobaXterm](https://img.shields.io/badge/MobaXterm-008FBA?style=flat&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black) ![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white) ![MobaXterm](https://img.shields.io/badge/MobaXterm-008FBA?style=flat&logoColor=white)
 
 ### 5. **데이터베이스 및 쿼리 도구**
-- ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
-- ![DBeaver](https://img.shields.io/badge/DBeaver-1C2834?style=flat&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) ![DBeaver](https://img.shields.io/badge/DBeaver-1C2834?style=flat&logoColor=white)
 
 ### 6. **구조도 작성 도구**
-- ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white)
-- ![Mermaid](https://img.shields.io/badge/Mermaid-4995DA?style=flat&logo=mermaid&logoColor=white)
+![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white) ![Mermaid](https://img.shields.io/badge/Mermaid-4995DA?style=flat&logo=mermaid&logoColor=white)
 
 ### 7. **데이터 활용 도구**
-- ![ChatGPT](https://img.shields.io/badge/ChatGPT-412991?style=flat&logo=openai&logoColor=white)
+![ChatGPT](https://img.shields.io/badge/ChatGPT-412991?style=flat&logo=openai&logoColor=white)
 
 
 ## 🎯 프로젝트 목표
