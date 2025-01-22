@@ -322,7 +322,7 @@ SELECT * FROM data_status;
          - 일정 시간이 지난 데이터를 **장기 보관용**으로 이관.
          - 데이터 아카이빙이나 정리된 통계 분석에 사용.
      
-     ### **적합한 이유**
+      **적합한 이유**
      
      - **ElasticSearch**:
          - 대용량 비정형 데이터(뉴스 기사 본문)의 빠른 검색 및 필터링.
@@ -330,7 +330,7 @@ SELECT * FROM data_status;
      - **RDBMS**:
          - 오래된 데이터를 구조화하여 보관 및 이관 후의 데이터 정리를 수행.
      
-     ### **적합한 사용 [프로젝트에서 보여지는]**
+      **적합한 사용 [프로젝트에서 보여지는]**
      
      - 실시간 대시보드에서 특정 ETF 카테고리 관련 기사를 빠르게 필터링.
      - 과거 데이터를 RDBMS에서 보관하며 월별/분기별 통계 보고서 생성.
@@ -543,7 +543,7 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
      - **실제 오류 코드**:
                     
                     
-                    복사편집
+       
                     [2025-01-21T18:16:15,891][ERROR][logstash.plugins.registry] Tried to load a plugin's code, but failed. {:exception=>#<LoadError: no such file to load -- logstash/outputs/jdbc>, :path=>"logstash/outputs/jdbc", :type=>"output", :name=>"jdbc"}
                     [2025-01-21T18:16:15,903][FATAL][logstash.runner] The given configuration is invalid. Reason: Unable to configure plugins: (PluginLoadingError) Couldn't find any output plugin named 'jdbc'.
                     
@@ -556,7 +556,6 @@ setx PATH "%PATH%;%JAVA_HOME%\bin"
                                 
                             
     
-         복사편집
         logstash-plugin install logstash-output-jdbc
                                 
                         
