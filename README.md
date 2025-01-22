@@ -408,20 +408,13 @@ Logstash 실행 시 인덱스 찾을 수 없는 오류 발생
 ```
    # 수정 전
 input {
-  elasticsearch {
-    hosts => ["http://localhost:9200"]
-    index => "news"
-    query => '{
-      "query": {
-        "range": {
-          "@timestamp": {
-            "gt": "now-1m/m"
-          }
-        }
-      }
-    }'
-  }
-}
+   elasticsearch {
+     hosts => ["http://localhost:9200"]
+     index => "news"
+     query => '{ "query": { "match_all": {} } }'
+     docinfo => true
+   }
+ }
 
 # 수정 후
 input {
